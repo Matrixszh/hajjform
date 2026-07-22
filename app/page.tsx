@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FallbackRegistrationForm } from "./_components/FallbackRegistrationForm";
 
 const aiImage = (prompt: string, imageSize = "landscape_16_9") =>
   `https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=${encodeURIComponent(
@@ -1044,6 +1045,15 @@ export default function Home() {
               ))}
             </div>
           </footer>
+        </div>
+      </section>
+
+      <section id="fallback-registration" className="bg-[var(--paper)]">
+        <div className="mx-auto max-w-[1220px] px-4 pb-14 pt-10 sm:px-6 lg:px-8">
+          <div className="rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6">
+            <SectionTitle>Fallback Registration</SectionTitle>
+            <FallbackRegistrationForm showHeader={false} />
+          </div>
         </div>
       </section>
     </main>
