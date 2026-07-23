@@ -152,7 +152,7 @@ const packages: PackageCard[] = [
       {
         number: "2",
         icon: "hotel",
-        text: "Upgraded five-star hotels in Makkah for 10 days from 4th Zul Hijjah to 14th Zul Hijjah .",
+        text: "Upgraded five-star hotels in Makkah for 10 days from 4th Zul Hijjah to 14th Zul Hijjah",
       },
       {
         number: "3",
@@ -561,7 +561,7 @@ export default function Home() {
 
                 <div className="mt-7 flex flex-wrap gap-3">
                   <a
-                    href="#contact"
+                    href="#fallback-registration"
                     className="inline-flex min-w-[190px] items-center justify-center rounded-[12px] bg-[var(--forest)] px-5 py-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[var(--forest-strong)]"
                   >
                     Reserve Your Spot
