@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Hajj Journey | Hajj 2027",
   description:
-    "A premium Hajj landing page designed to mirror the provided travel brochure reference.",
+    " We take care of every flight, visa, accommodation,transport, and every detail so you can focus on your ibadah with peace of mind.",
 };
 
 export default function RootLayout({
