@@ -152,7 +152,7 @@ const packages: PackageCard[] = [
       {
         number: "2",
         icon: "hotel",
-        text: "Upgraded five-star hotels in Makkah",
+        text: "Upgraded five-star hotels in Makkah for 10 days from 4th Zul Hijjah to 14th Zul Hijjah .",
       },
       {
         number: "3",
