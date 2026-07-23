@@ -5,11 +5,8 @@ import { useMemo, useRef, useState } from "react";
 type Gender = "" | "Male" | "Female";
 type PackageType =
   | ""
-  | "Hajj Package A"
-  | "Hajj Package B"
-  | "Umrah Package"
-  | "Ziyarah Package";
-type NusukHajjCompany = "" | "Rawaf Mina" | "Ikram Aldeif" | "Holiday inn";
+  | "Standard 11900"
+  | "Deluxe 15900";
 
 type FormState = {
   firstName: string;
@@ -36,7 +33,6 @@ type FormState = {
 
   packageType: PackageType;
   departureCity: string;
-  nusukHajjCompany: NusukHajjCompany;
   travelingCompanions: string;
 
   termsAccepted: boolean;
@@ -95,7 +91,6 @@ const initialState: FormState = {
 
   packageType: "",
   departureCity: "",
-  nusukHajjCompany: "",
   travelingCompanions: "",
 
   termsAccepted: false,
@@ -169,20 +164,13 @@ const travelFields: readonly FieldDef[] = [
     label: "Package Type",
     kind: "select",
     required: true,
-    options: ["Hajj Package A", "Hajj Package B", "Umrah Package", "Ziyarah Package"],
+    options: ["Standard 11900", "Deluxe 15900"],
   },
   {
     name: "departureCity",
     label: "Departure City",
     kind: "text",
     required: true,
-  },
-  {
-    name: "nusukHajjCompany",
-    label: "Nusuk Hajj Company",
-    kind: "select",
-    required: true,
-    options: ["Rawaf Mina", "Ikram Aldeif", "Holiday inn"],
   },
   {
     name: "travelingCompanions",
@@ -213,7 +201,6 @@ const requiredOrder: readonly (keyof FormState)[] = [
   "photograph",
   "packageType",
   "departureCity",
-  "nusukHajjCompany",
   "termsAccepted",
 ] as const;
 
@@ -249,7 +236,6 @@ function validate(state: FormState): FormErrors {
     "dateOfExpiration",
     "packageType",
     "departureCity",
-    "nusukHajjCompany",
   ];
 
   for (const field of requiredText) {
@@ -435,7 +421,6 @@ export function FallbackRegistrationForm({
 
     appendString("packageType", state.packageType);
     appendString("departureCity", state.departureCity);
-    appendString("nusukHajjCompany", state.nusukHajjCompany);
     appendString("travelingCompanions", state.travelingCompanions);
 
     fd.append("termsAccepted", state.termsAccepted ? "true" : "false");
@@ -675,4 +660,3 @@ export function FallbackRegistrationForm({
     </div>
   );
 }
-

@@ -1,11 +1,6 @@
 import Image from "next/image";
 import { FallbackRegistrationForm } from "./_components/FallbackRegistrationForm";
 
-const aiImage = (prompt: string, imageSize = "landscape_16_9") =>
-  `https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=${encodeURIComponent(
-    prompt
-  )}&image_size=${imageSize}`;
-
 type PackageFeatureIconType =
   | "hotel"
   | "plane"
@@ -50,10 +45,7 @@ type PackageCard = StandardPackage | DeluxePackage;
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Packages", href: "#packages" },
-  { label: "Why Caravan 72", href: "#why" },
-  { label: "Journey Timeline", href: "#journey" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "FAQs", href: "#faqs" },
+  { label: "Why Choose Us", href: "#why" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -138,7 +130,7 @@ const packages: PackageCard[] = [
       {
         number: "13",
         icon: "support",
-        text: "Dedicated ground support from the Caravan 72 team in both Madinah and Makkah throughout your Hajj journey.",
+        text: "Dedicated ground support from our team in both Madinah and Makkah throughout your Hajj journey.",
       },
     ],
     cta: "Choose Standard",
@@ -187,119 +179,44 @@ const packages: PackageCard[] = [
   },
 ];
 
-const journeyStops = [
-  "Arrival in Madinah",
-  "Madinah Stay",
-  "Travel to Makkah",
-  "Ziyarat",
-  "Mina",
-  "Arafat",
-  "Muzdalifah",
-  "Tawaf",
-  "Departure",
-];
+type ReasonIconType =
+  | "shield"
+  | "people"
+  | "support"
+  | "hotel"
+  | "logistics"
+  | "ibadah";
 
 const reasons = [
   {
     title: "Visa Guaranteed",
     text: "Official Nusuk processing and clear documentation guidance.",
-    icon: "V",
+    icon: "shield" as ReasonIconType,
   },
   {
     title: "Experienced Team",
     text: "Managers and group leaders who guide with care and trust.",
-    icon: "E",
+    icon: "people" as ReasonIconType,
   },
   {
     title: "Ground Support",
     text: "Arabic-speaking coordinators in Madinah and Makkah.",
-    icon: "G",
+    icon: "support" as ReasonIconType,
   },
   {
     title: "Premium Stay",
     text: "Carefully selected hotels chosen for comfort and convenience.",
-    icon: "P",
+    icon: "hotel" as ReasonIconType,
   },
   {
     title: "Organized Logistics",
     text: "Every leg of your journey arranged with calm precision.",
-    icon: "O",
+    icon: "logistics" as ReasonIconType,
   },
   {
     title: "Focus on Ibadah",
     text: "We handle the details so you can worship with peace of mind.",
-    icon: "I",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Ahmed Khan",
-    location: "New Jersey, USA",
-    quote:
-      "Caravan 72 handled every detail with patience and precision. It let us focus completely on our worship.",
-    image: aiImage(
-      "happy Muslim family in ihram clothing smiling outdoors, elegant travel testimonial portrait, realistic photography, warm natural light",
-      "square_hd"
-    ),
-  },
-  {
-    name: "Fatima & Yasir",
-    location: "Toronto, Canada",
-    quote:
-      "The team was calm, organized, and deeply supportive from orientation all the way through Mina and Arafat.",
-    image: aiImage(
-      "Muslim couple portrait wearing modest pilgrimage clothing, warm natural light, premium testimonial photography, realistic detail",
-      "square_hd"
-    ),
-  },
-  {
-    name: "Aisha Patel",
-    location: "Chicago, USA",
-    quote:
-      "Our group felt cared for the entire time. The hotels, transport, and spiritual guidance were all excellent.",
-    image: aiImage(
-      "group of Muslim women travelers smiling together, refined testimonial photography, soft warm sunlight, realistic portrait",
-      "square_hd"
-    ),
-  },
-];
-
-const galleryImages = [
-  {
-    alt: "Kaaba view",
-    src: aiImage(
-      "the Kaaba in Mecca at golden hour with pilgrims around it, realistic editorial travel photography, high detail",
-      "portrait_4_3"
-    ),
-  },
-  {
-    alt: "Madinah mosque",
-    src: aiImage(
-      "Masjid an Nabawi in Madinah under soft morning light, realistic travel brochure photography, elegant composition",
-      "portrait_4_3"
-    ),
-  },
-  {
-    alt: "Haramain train",
-    src: aiImage(
-      "sleek Haramain high speed train in Saudi Arabia, premium travel brochure photography, realistic lighting",
-      "portrait_4_3"
-    ),
-  },
-  {
-    alt: "Premium hotel",
-    src: aiImage(
-      "luxury hotel suite with warm hospitality design for Hajj travelers, realistic brochure photography, refined details",
-      "portrait_4_3"
-    ),
-  },
-  {
-    alt: "Mina tents",
-    src: aiImage(
-      "panoramic view of Mina tents during Hajj, realistic travel documentary photography, warm desert light",
-      "portrait_4_3"
-    ),
+    icon: "ibadah" as ReasonIconType,
   },
 ];
 
@@ -316,39 +233,6 @@ const faqColumns = [
   ],
 ];
 
-const footerColumns = [
-  {
-    title: "Quick Links",
-    items: [
-      "Home",
-      "Packages",
-      "Why Caravan 72",
-      "Journey Timeline",
-      "Testimonials",
-      "FAQs",
-    ],
-  },
-  {
-    title: "Services",
-    items: [
-      "Visa Assistance",
-      "Hajj Training",
-      "Accommodation",
-      "Ground Transport",
-      "Ziyarat Tours",
-    ],
-  },
-  {
-    title: "Contact",
-    items: [
-      "(877) 575-6775",
-      "info@caravan72.com",
-      "www.caravan72.com",
-      "Illinois, USA",
-    ],
-  },
-];
-
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-8 flex items-center justify-center gap-4 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--gold-deep)]">
@@ -363,6 +247,67 @@ function CircleIcon({ label }: { label: string }) {
   return (
     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[var(--gold-soft)] bg-white text-[12px] font-bold uppercase text-[var(--forest)] shadow-[0_8px_18px_rgba(65,49,22,0.08)]">
       {label}
+    </span>
+  );
+}
+
+function ReasonIcon({ type }: { type: ReasonIconType }) {
+  const stroke = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  return (
+    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--gold-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#f8f1df_100%)] text-[var(--forest)] shadow-[0_10px_20px_rgba(65,49,22,0.08)]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+        {type === "shield" && (
+          <>
+            <path d="M12 3 18 5.5v5.7c0 4.1-2.5 7.7-6 9.3-3.5-1.6-6-5.2-6-9.3V5.5L12 3Z" {...stroke} />
+            <path d="m9.5 12 1.7 1.7L14.8 10" {...stroke} />
+          </>
+        )}
+        {type === "people" && (
+          <>
+            <circle cx="9" cy="9" r="2.5" {...stroke} />
+            <circle cx="15.5" cy="10" r="2" {...stroke} />
+            <path d="M4.5 18c.6-2.3 2.5-3.8 4.5-3.8s3.9 1.5 4.5 3.8" {...stroke} />
+            <path d="M13.5 17.5c.4-1.7 1.7-2.8 3.3-2.8 1.4 0 2.6.9 3.1 2.3" {...stroke} />
+          </>
+        )}
+        {type === "support" && (
+          <>
+            <path d="M6 12a6 6 0 1 1 12 0" {...stroke} />
+            <path d="M6.5 14H5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2.5" {...stroke} />
+            <path d="M17.5 18H19a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1.5" {...stroke} />
+            <path d="M9.5 19.5c.8.3 1.6.5 2.5.5 1 0 1.9-.2 2.8-.6" {...stroke} />
+          </>
+        )}
+        {type === "hotel" && (
+          <>
+            <rect x="5" y="4.5" width="14" height="15" rx="1.5" {...stroke} />
+            <path d="M9 4.5v15M15 4.5v15M5 10h14M11 13h2" {...stroke} />
+          </>
+        )}
+        {type === "logistics" && (
+          <>
+            <rect x="3.5" y="7" width="10" height="8" rx="1.5" {...stroke} />
+            <path d="M13.5 10h3l2 2.5V15h-5" {...stroke} />
+            <circle cx="7" cy="17.5" r="1.5" {...stroke} />
+            <circle cx="16.5" cy="17.5" r="1.5" {...stroke} />
+          </>
+        )}
+        {type === "ibadah" && (
+          <>
+            <path d="M6 19h12" {...stroke} />
+            <path d="M8.5 19v-4.5c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5V19" {...stroke} />
+            <path d="M10.5 11V8.5a1.5 1.5 0 0 1 3 0V11" {...stroke} />
+            <path d="M12 5V3.5M10.8 4.7h2.4" {...stroke} />
+          </>
+        )}
+      </svg>
     </span>
   );
 }
@@ -481,7 +426,7 @@ export default function Home() {
     >
       <div className="mx-auto max-w-full px-4 pb-0 pt-5 sm:px-6 lg:px-8">
         <header className="rounded-[18px] border border-[var(--line)] bg-white/90 px-4 py-4 shadow-[0_20px_50px_rgba(64,44,17,0.08)] backdrop-blur md:px-6">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="grid h-12 w-12 place-items-center rounded-[14px] border border-[var(--gold-soft)] bg-[var(--forest)] text-[var(--paper)]">
                 <span className="text-[22px] leading-none">C</span>
@@ -491,7 +436,7 @@ export default function Home() {
                   className="text-[28px] leading-none text-[var(--forest)]"
                   style={{ fontFamily: "var(--font-brand)" }}
                 >
-                  Caravan 72
+                  Hajj Journey
                 </p>
                 <p className="mt-1 text-[10px] uppercase tracking-[0.34em] text-[#8e7b60]">
                   Faith Travel Experience
@@ -499,6 +444,60 @@ export default function Home() {
               </div>
             </div>
 
+            <details className="group relative lg:hidden">
+              <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-[12px] border border-[var(--line)] bg-white text-[var(--forest)] shadow-[0_10px_24px_rgba(64,44,17,0.06)] transition-colors hover:bg-[#faf6ee] [&::-webkit-details-marker]:hidden">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-5 w-5 group-open:hidden"
+                >
+                  <path
+                    d="M4 7h16M4 12h16M4 17h16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="hidden h-5 w-5 group-open:block"
+                >
+                  <path
+                    d="M6 6l12 12M18 6 6 18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </summary>
+
+              <div className="absolute right-0 top-[calc(100%+12px)] z-30 w-[260px] rounded-[18px] border border-[var(--line)] bg-white p-4 shadow-[0_24px_50px_rgba(64,44,17,0.12)]">
+                <nav className="flex flex-col gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#374239]">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="rounded-[10px] px-2 py-2 transition-colors hover:bg-[#faf6ee] hover:text-[var(--gold-deep)]"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </nav>
+
+                <a
+                  href="#fallback-registration"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-[12px] bg-[var(--forest)] px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[var(--forest-strong)]"
+                >
+                  Book Now
+                </a>
+              </div>
+            </details>
+          </div>
+
+          <div className="mt-4 hidden items-center justify-between gap-6 lg:flex">
             <nav className="flex flex-wrap items-center gap-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#374239]">
               {navLinks.map((link) => (
                 <a
@@ -512,7 +511,7 @@ export default function Home() {
             </nav>
 
             <a
-              href="#contact"
+              href="#fallback-registration"
               className="inline-flex items-center justify-center rounded-[12px] bg-[var(--forest)] px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[var(--forest-strong)]"
             >
               Book Now
@@ -593,20 +592,15 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative min-h-[430px] overflow-hidden rounded-[24px] border border-[var(--line)] bg-[#dfd4c0] shadow-[0_22px_50px_rgba(58,45,23,0.08)]">
+            <div className="relative min-h-[430px] overflow-hidden rounded-[24px] ">
               <Image
-                src={aiImage(
-                  "luxury pilgrimage travel advertisement photo of the Kaaba in Mecca with Abraj Al Bait clock tower behind it, warm sunrise haze, pilgrims in white garments in foreground, realistic editorial brochure image, high detail",
-                  "landscape_16_9"
-                )}
+                src="/hajj.jpeg"
                 alt="Pilgrims gathered around the Kaaba in Mecca"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,41,33,0.04),rgba(255,255,255,0)_28%,rgba(251,244,234,0.32))]" />
-              <div className="absolute bottom-0 left-0 right-0 h-32 bg-[linear-gradient(to_top,rgba(255,250,243,0.46),transparent)]" />
 
               <div className="absolute right-4 top-5 grid h-[118px] w-[118px] place-items-center rounded-full border-[6px] border-[#d3b36a] bg-[radial-gradient(circle_at_30%_30%,#175646_0%,#083428_70%)] text-center text-white shadow-[0_18px_30px_rgba(17,45,36,0.3)]">
                 <div className="w-[82px]">
@@ -777,7 +771,7 @@ export default function Home() {
 
                       <div className="relative z-10">
                         <p
-                          className={`border-b pb-3 text-center text-[26px] font-extrabold uppercase tracking-[0.04em] ${
+                          className={`border-b pb-3 text-center text-[26px] font-italic uppercase tracking-[0.04em] ${
                             isDeluxe
                               ? "border-[#e2ca9a] text-[#8f6524]"
                               : "border-[#d3e2da] text-[var(--forest)]"
@@ -817,7 +811,7 @@ export default function Home() {
                         </ul>
 
                         <a
-                          href="#contact"
+                          href="#fallback-registration"
                           className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[12px] px-5 text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors ${pkg.buttonClass} ${
                             isDeluxe
                               ? "shadow-[0_12px_22px_rgba(172,126,39,0.18)]"
@@ -836,36 +830,17 @@ export default function Home() {
         </section>
 
         <section
-          id="journey"
-          className="mt-7 rounded-[22px] border border-[var(--line)] bg-white/70 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.05)] sm:px-6"
-        >
-          <SectionTitle>Hajj Journey</SectionTitle>
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9">
-            {journeyStops.map((stop, index) => (
-              <div key={stop} className="text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[var(--gold-soft)] bg-[var(--forest)] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#f6ecd8] shadow-[0_12px_28px_rgba(17,56,45,0.16)]">
-                  {index + 1}
-                </div>
-                <p className="mt-3 text-[13px] font-semibold text-[#334036]">
-                  {stop}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
           id="why"
           className="mt-7 rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6"
         >
-          <SectionTitle>Why Caravan 72?</SectionTitle>
+          <SectionTitle>Why Choose Us?</SectionTitle>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {reasons.map((reason) => (
               <article
                 key={reason.title}
                 className="rounded-[18px] border border-[var(--line)] bg-[#fffefb] p-5 shadow-[0_14px_34px_rgba(66,47,18,0.05)]"
               >
-                <CircleIcon label={reason.icon} />
+                <ReasonIcon type={reason.icon} />
                 <h3 className="mt-4 text-[18px] font-semibold text-[var(--forest)]">
                   {reason.title}
                 </h3>
@@ -877,87 +852,20 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          id="testimonials"
-          className="mt-7 rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6"
-        >
-          <SectionTitle>What Our Pilgrims Say</SectionTitle>
-          <div className="grid gap-5 xl:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <article
-                key={testimonial.name}
-                className="rounded-[20px] border border-[var(--line)] bg-[#fffefb] p-5 shadow-[0_14px_34px_rgba(66,47,18,0.05)]"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="relative h-20 w-20 overflow-hidden rounded-[18px] border border-[var(--line)]">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-[13px] uppercase tracking-[0.2em] text-[var(--gold-deep)]">
-                      5.0 Rating
-                    </p>
-                    <p className="mt-2 text-lg text-[#d0a13d]">★★★★★</p>
-                  </div>
-                </div>
-                <p className="mt-5 text-[15px] leading-7 text-[#525851]">
-                  “{testimonial.quote}”
-                </p>
-                <div className="mt-5">
-                  <p className="text-[16px] font-semibold text-[var(--forest)]">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-[13px] text-[#7b7569]">
-                    {testimonial.location}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {galleryImages.map((image) => (
-              <div
-                key={image.alt}
-                className="relative min-h-[150px] overflow-hidden rounded-[18px] border border-[var(--line)]"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 20vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="faqs"
-          className="mt-7 rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6"
-        >
-          <SectionTitle>Frequently Asked Questions</SectionTitle>
-          <div className="grid gap-4 lg:grid-cols-2">
-            {faqColumns.map((column, index) => (
-              <div key={index} className="space-y-4">
-                {column.map((question) => (
-                  <FaqRow key={question} question={question} />
-                ))}
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
+
+      <section id="fallback-registration" className="bg-[var(--paper)]">
+        <div className="mx-auto max-w-[1220px] px-4 pb-2 pt-8 sm:px-6 lg:px-8">
+          <div className="rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6">
+            <SectionTitle>Registration</SectionTitle>
+            <FallbackRegistrationForm showHeader={false} />
+          </div>
+        </div>
+      </section>
 
       <section
         id="contact"
-        className="mt-8 bg-[linear-gradient(135deg,#0a3b30_0%,#072d24_100%)] text-[#f6efdf]"
+        className="bg-[linear-gradient(135deg,#0a3b30_0%,#072d24_100%)] text-[#f6efdf]"
       >
         <div className="mx-auto max-w-[1220px] px-4 py-6 sm:px-6 lg:px-8">
           <div className="rounded-[24px] border border-[#1c5c4d] bg-[linear-gradient(90deg,rgba(203,159,73,0.12),rgba(255,255,255,0.02))] px-5 py-5 shadow-[0_20px_50px_rgba(0,0,0,0.16)]">
@@ -985,28 +893,16 @@ export default function Home() {
                   (877) 575-6775
                 </a>
                 <a
-                  href="mailto:info@caravan72.com"
-                  className="rounded-[14px] border border-[#2d705f] bg-[#0f473a] px-5 py-4 text-sm font-medium text-white transition-colors hover:bg-[#145845]"
-                >
-                  info@caravan72.com
-                </a>
-                <a
-                  href="#home"
+                  href="/terms-and-conditions"
                   className="rounded-[14px] bg-[var(--gold-deep)] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.16em] text-[#17372e] transition-colors hover:bg-[#dcb262]"
                 >
-                  Book Now
-                </a>
-                <a
-                  href="#packages"
-                  className="rounded-[14px] border border-[#d0ab63] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.16em] text-[#f7edd4] transition-colors hover:bg-white/5"
-                >
-                  Speak To An Advisor
+                  Terms and Conditions
                 </a>
               </div>
             </div>
           </div>
 
-          <footer className="grid gap-8 pb-10 pt-8 lg:grid-cols-[1.2fr_2fr]">
+          <footer className="pb-10 pt-8">
             <div>
               <div className="flex items-center gap-3">
                 <div className="grid h-12 w-12 place-items-center rounded-[14px] border border-[#d1b574] bg-[#0e473a] text-[#f6e6bd]">
@@ -1017,7 +913,7 @@ export default function Home() {
                     className="text-[28px] leading-none"
                     style={{ fontFamily: "var(--font-brand)" }}
                   >
-                    Caravan 72
+                    Hajj Journey
                   </p>
                   <p className="mt-1 text-[10px] uppercase tracking-[0.34em] text-[#c7b183]">
                     Hajj Travel Agency
@@ -1029,31 +925,7 @@ export default function Home() {
                 Hajj journey.
               </p>
             </div>
-
-            <div className="grid gap-8 sm:grid-cols-3">
-              {footerColumns.map((column) => (
-                <div key={column.title}>
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-[#e5c67d]">
-                    {column.title}
-                  </p>
-                  <ul className="mt-4 space-y-3 text-[14px] text-[#e2ddd2]">
-                    {column.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
           </footer>
-        </div>
-      </section>
-
-      <section id="fallback-registration" className="bg-[var(--paper)]">
-        <div className="mx-auto max-w-[1220px] px-4 pb-14 pt-10 sm:px-6 lg:px-8">
-          <div className="rounded-[22px] border border-[var(--line)] bg-white/80 px-4 py-6 shadow-[0_18px_42px_rgba(67,49,18,0.06)] sm:px-6">
-            <SectionTitle>Fallback Registration</SectionTitle>
-            <FallbackRegistrationForm showHeader={false} />
-          </div>
         </div>
       </section>
     </main>

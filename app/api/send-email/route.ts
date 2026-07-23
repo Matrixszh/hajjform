@@ -146,7 +146,6 @@ export async function POST(req: Request) {
 
     const packageType = getText("packageType");
     const departureCity = getText("departureCity");
-    const nusukHajjCompany = getText("nusukHajjCompany");
     const travelingCompanions = getText("travelingCompanions");
 
     const termsAcceptedRaw = getText("termsAccepted");
@@ -206,7 +205,6 @@ export async function POST(req: Request) {
     const travelRows =
       row("packageType", packageType) +
       row("departureCity", departureCity) +
-      row("nusukHajjCompany", nusukHajjCompany) +
       row("travelingCompanions", travelingCompanions);
 
     const termsRows = row("termsAccepted", termsAccepted ? "Yes" : "No");
@@ -271,4 +269,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: message }, { status });
   }
 }
-
