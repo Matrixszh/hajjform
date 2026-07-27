@@ -39,7 +39,7 @@ function getTransportErrorResponse(err: unknown) {
     return {
       status: 401,
       error:
-        "Gmail authentication failed. Check EMAIL_USER and use a Gmail App Password for EMAIL_PASS in Vercel.",
+        "Zoho authentication failed. Check EMAIL_USER and EMAIL_PASS in Vercel.",
       details: message,
     };
   }
@@ -53,7 +53,7 @@ function getTransportErrorResponse(err: unknown) {
   ) {
     return {
       status: 502,
-      error: "Could not connect to Gmail SMTP from the server.",
+      error: "Could not connect to Zoho SMTP from the server.",
       details: message,
     };
   }
@@ -215,7 +215,7 @@ export async function POST(req: Request) {
     ]);
 
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "smtp.zoho.com",
       port: 465,
       secure: true,
       auth: {
