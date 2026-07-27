@@ -14,6 +14,57 @@ type AttachmentSummary = {
   reason: string | null;
 };
 
+function normalizeEnv(value: string | undefined) {
+  return value?.trim().replace(/\s+/g, "");
+}
+
+function getErrorMessage(err: unknown) {
+  if (err instanceof Error && err.message.trim().length > 0) {
+    return err.message;
+  }
+
+  return "Unexpected email transport error.";
+}
+
+function getTransportErrorResponse(err: unknown) {
+  const message = getErrorMessage(err);
+  const lower = message.toLowerCase();
+
+  if (
+    lower.includes("invalid login") ||
+    lower.includes("username and password not accepted") ||
+    lower.includes("badcredentials") ||
+    lower.includes("auth")
+  ) {
+    return {
+      status: 401,
+      error:
+        "Gmail authentication failed. Check EMAIL_USER and use a Gmail App Password for EMAIL_PASS in Vercel.",
+      details: message,
+    };
+  }
+
+  if (
+    lower.includes("timeout") ||
+    lower.includes("etimedout") ||
+    lower.includes("econnreset") ||
+    lower.includes("econnrefused") ||
+    lower.includes("network")
+  ) {
+    return {
+      status: 502,
+      error: "Could not connect to Gmail SMTP from the server.",
+      details: message,
+    };
+  }
+
+  return {
+    status: 502,
+    error: "Email transporter verification failed.",
+    details: message,
+  };
+}
+
 function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
@@ -99,9 +150,9 @@ async function fileToAttachment(
 
 export async function POST(req: Request) {
   try {
-    const emailUser = process.env.EMAIL_USER;
-    const emailPass = process.env.EMAIL_PASS;
-    const emailTo = process.env.EMAIL_TO || emailUser;
+    const emailUser = normalizeEnv(process.env.EMAIL_USER);
+    const emailPass = normalizeEnv(process.env.EMAIL_PASS);
+    const emailTo = process.env.EMAIL_TO?.trim() || emailUser;
 
     if (!emailUser || !emailPass) {
       return NextResponse.json(
@@ -164,19 +215,25 @@ export async function POST(req: Request) {
     ]);
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: emailUser,
         pass: emailPass,
       },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 20000,
     });
 
     try {
       await transporter.verify();
-    } catch {
+    } catch (err) {
+      const response = getTransportErrorResponse(err);
       return NextResponse.json(
-        { error: "Email transporter verification failed." },
-        { status: 502 }
+        { error: response.error, details: response.details },
+        { status: response.status }
       );
     }
 
@@ -251,12 +308,11 @@ export async function POST(req: Request) {
         attachments,
       });
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to send email.";
-      const lower = message.toLowerCase();
-      const status =
-        lower.includes("auth") || lower.includes("login") ? 401 : 500;
-      return NextResponse.json({ error: message }, { status });
+      const response = getTransportErrorResponse(err);
+      return NextResponse.json(
+        { error: response.error, details: response.details },
+        { status: response.status }
+      );
     }
 
     return NextResponse.json({ ok: true });
