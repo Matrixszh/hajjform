@@ -144,16 +144,14 @@ const addressPassportFields: readonly FieldDef[] = [
   },
   {
     name: "passportCopy",
-    label: "Passport Copy (Image, max 4MB)",
+    label: "Passport Copy (Optional image, max 4MB)",
     kind: "file",
-    required: true,
     accept: "image/*",
   },
   {
     name: "photograph",
-    label: "Photograph (Image, max 4MB)",
+    label: "Photograph (Optional image, max 4MB)",
     kind: "file",
-    required: true,
     accept: "image/*",
   },
 ] as const;
@@ -197,8 +195,6 @@ const requiredOrder: readonly (keyof FormState)[] = [
   "passportNumber",
   "dateOfIssue",
   "dateOfExpiration",
-  "passportCopy",
-  "photograph",
   "packageType",
   "departureCity",
   "termsAccepted",
@@ -249,8 +245,6 @@ function validate(state: FormState): FormErrors {
     errors.email = "Enter a valid email address.";
   }
 
-  if (!state.passportCopy) errors.passportCopy = "This file is required.";
-  if (!state.photograph) errors.photograph = "This file is required.";
   if (!state.termsAccepted) errors.termsAccepted = "This field is required.";
 
   const checkFile = (field: "passportCopy" | "photograph", file: File | null) => {
@@ -560,8 +554,8 @@ export function FallbackRegistrationForm({
             Fallback Registration Form
           </h2>
           <p className="mt-2 max-w-3xl text-[14px] leading-6 text-[#4b564e]">
-            This is a single-page emergency form. Please complete all required fields and upload
-            the required images (max 4MB each).
+            This is a single-page emergency form. Please complete all required fields. Image
+            uploads are optional (max 4MB each).
           </p>
         </div>
       )}
